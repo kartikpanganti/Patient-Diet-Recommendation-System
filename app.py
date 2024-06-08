@@ -9,7 +9,7 @@ import langchain.globals as lcg
 lcg.set_verbose(True)  # Enable verbose mode if needed
 
 #  model template
-os.environ["GOOGLE_API_KEY"] = 'AIzaSyDIJRSyLBDzhK_Lmg7n5nMkd2ALRZeLuZg'
+os.environ["GOOGLE_API_KEY"] = 'HERE ENTER YOUR GEMINI AI STUDIO GENERETED API KEY'
 generation_config = {"temperature": 0.9, "top_p": 1, "top_k": 1, "max_output_tokens": 2048}
 model = GoogleGenerativeAI(model="gemini-1.0-pro", generation_config=generation_config)
 # promt template
@@ -31,7 +31,7 @@ prompt_template_resto = PromptTemplate(
 )
 chain_resto = LLMChain(llm=model, prompt=prompt_template_resto)
 
-# Custom styling
+# here is some my custom styling on streamlit
 st.markdown(
     """
     <style>
