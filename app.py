@@ -35,7 +35,9 @@ chain_resto = LLMChain(llm=model, prompt=prompt_template_resto)
 st.markdown(
     """
     <style>
-
+.viewerBadge_link__qRIco{
+visibility:hidden;
+}
 
     #MainMenu{
     visibility:hidden;
