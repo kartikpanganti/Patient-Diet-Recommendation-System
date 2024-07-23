@@ -35,9 +35,12 @@ chain_resto = LLMChain(llm=model, prompt=prompt_template_resto)
 st.markdown(
     """
     <style>
-.viewerBadge_container__r5tak styles_viewerBadge__CvC9N{
-visibility:hidden;
-}
+.viewerBadge_link__qRIco {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 75 75 / var(--tw-bg-opacity));
+    border-top-left-radius: .5rem;
+    padding: 1rem 1.25rem;
+    visibility: hidden;}
 
     #MainMenu{
     visibility:hidden;
