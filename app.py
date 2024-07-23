@@ -153,3 +153,13 @@ if st.button('Get Recommendations'):
         st.write(results_text)
     else:
         st.write("Sorry, you did not provide any information. Please fill in all the form fields.")
+
+
+st.markdown(
+    """
+    <div class="footer">
+        &copy; 2024 Kartik Panganti. All rights reserved.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
