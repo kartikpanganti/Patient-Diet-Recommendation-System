@@ -42,6 +42,10 @@ st.markdown(
     padding: 1rem 1.25rem;
     visibility: hidden;}
 
+    a{
+visibility:hidden;
+    }
+
     #MainMenu{
     visibility:hidden;
     }
