@@ -3,13 +3,13 @@ import streamlit as st
 from langchain.prompts import PromptTemplate
 from langchain_google_genai import GoogleGenerativeAI
 from langchain.chains import LLMChain
-import langchain.globals as lcg 
+import langchain.globals as lcg
 
 # Set verbose to True or False based on your requirements
 lcg.set_verbose(True)  # Enable verbose mode if needed
 
 #  model template
-os.environ["GOOGLE_API_KEY"] = 'HERE ENTER YOUR GEMINI AI STUDIO GENERETED API KEY'
+os.environ["GOOGLE_API_KEY"] = 'KEY'
 generation_config = {"temperature": 0.9, "top_p": 1, "top_k": 1, "max_output_tokens": 2048}
 model = GoogleGenerativeAI(model="gemini-1.0-pro", generation_config=generation_config)
 # promt template
@@ -25,7 +25,7 @@ prompt_template_resto = PromptTemplate(
              "Person veg_or_nonveg: {veg_or_nonveg}\n"
              "Person generic disease: {disease}\n"
              "Person region: {region}\n"
-             "Person state: {state}\n"  
+             "Person state or City: {state}\n"  
              "Person allergics: {allergics}\n"
              "Person foodtype: {foodtype}."
 )
@@ -52,34 +52,61 @@ st.markdown(
     text-align: center;
     font-size: 54px;
         }
-       section.main.st-emotion-cache-uf99v8.ea3mdgi8 {
-        background-size: cover;
-            background-image: url("https://img.freepik.com/free-vector/fruit-vegetables-background-design_23-2148507118.jpg?w=996&t=st=1717654581~exp=1717655181~hmac=e4c45cf7836e3598a164a46d6f162b7d4bec36bd65b1ec93c565393157df1264");
-
+       section.main.st-emotion-cache-bm2z3a.ea3mdgi8 {
+    background-size: cover;
+    background-image: url(https://img.freepik.com/free-photo/elevated-view-fresh-vegetables-puffed-rice-cake-black-concrete-backdrop_23-2148062466.jpg?w=900&t=st=1721710605~exp=1721711205~hmac=e7feae1…);
 }
 
-label.st-emotion-cache-1qg05tj.e1y5xkzn3{
-    color: black;
+p .st-emotion-cache-1sno8jx e1nzilvr4{
+{
+    font-size: 50px;
+    font-family: auto;
+    color: #96f700;
+    text-shadow: 5px 3px 4px darkmagenta;
+}
+}
+h1 {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 700;
+    color: rgb(9 253 255);
+    padding: 1.25rem 0px 1rem;
+    margin: 0px;
+    line-height: 1.2;
+    font-size: 49px;
+    text-align: center;
+    text-shadow: 6px 6px 6px blue;
+}
+
+label.st-emotion-cache-1qg05tj.e1y5xkzn3 {
+    color: #ffa1a1;
     font-weight: bold;
     text-shadow: 0px 0px 5px red;
 }
-
 button.st-emotion-cache-19rxjzo.ef3psqc12{
 background-color: #008CBA;;
 }
 
 
-strong{
-    color: #0057e3;
+strong {
+    color: #ffffff;
     font-size: 25px;
-    text-shadow: #FC0 1px 0 10px;
+    text-shadow: #FC0 10px 1px 13px;
     font-weight: bold;
 }
 
-li{
-    color: black;
-    font-weight: bolder;
+li {
+    color: #000000;
+    /* font-weight: bolder; */
+    webkit-text-fill-color: white;
+    -webkit-text-stroke: 1px #2fbcff;
 }
+
+li::marker{
+list-style-type: circle;
+color:#2fbcff
+
+}
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -122,6 +149,7 @@ if st.button('Get Recommendations'):
         # Extract recommendations
         results_text = results['text']
         st.write("Generated Recommendations:")
+
         st.write(results_text)
     else:
         st.write("Sorry, you did not provide any information. Please fill in all the form fields.")
