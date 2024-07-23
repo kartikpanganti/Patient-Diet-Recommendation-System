@@ -40,6 +40,10 @@ st.markdown(
     #MainMenu{
     visibility:hidden;
     }
+
+    .stActionButton{
+    visibility:hidden;
+    }
         .title {
             font-size: 25px;
             font-weight: bold;
