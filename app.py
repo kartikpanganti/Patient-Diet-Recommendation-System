@@ -44,6 +44,10 @@ st.markdown(
     .stActionButton{
     visibility:hidden;
     }
+
+    .st-emotion-cache-h4xjwg ezrtsby2{
+    visibility:hidden;
+    }
         .title {
             font-size: 25px;
             font-weight: bold;
