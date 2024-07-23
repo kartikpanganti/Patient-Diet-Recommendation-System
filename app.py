@@ -163,7 +163,7 @@ height = st.text_input('Height (cm)')
 veg_or_nonveg = st.selectbox('Veg or Non-Veg', ['Veg', 'Non-Veg'])
 disease = st.text_input('Disease')
 region = st.text_input('Region')
-state = st.text_input('State')
+state = st.text_input('State / City')
 allergics = st.text_input('Allergics')
 foodtype = st.text_input('Food Type')
 
