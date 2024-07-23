@@ -63,7 +63,7 @@ st.markdown(
         }
        section.main.st-emotion-cache-bm2z3a.ea3mdgi8 {
     background-size: cover;
-    background-image: url(https://img.freepik.com/free-photo/elevated-view-fresh-vegetables-puffed-rice-cake-black-concrete-backdrop_23-2148062466.jpg?w=900&t=st=1721710605~exp=1721711205~hmac=e7feae1…);
+    background-image: url(https://img.freepik.com/free-vector/gradient-abstract-background_23-2149131346.jpg?w=1060&t=st=1721715245~exp=1721715845~hmac=63d8f83801288b55c60ea173b4b07b304a1ad4021767ea96baf2d95ce66dc055);
 }
 
 p .st-emotion-cache-1sno8jx e1nzilvr4{
