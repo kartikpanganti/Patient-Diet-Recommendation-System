@@ -115,7 +115,10 @@ label.st-emotion-cache-1qg05tj.e1y5xkzn3 {
 button.st-emotion-cache-19rxjzo.ef3psqc12{
 background-color: #008CBA;;
 }
+#bui638val-0{
+-webkit-text-stroke: 1px white;
 
+}
 
 strong {
     color: #002aff;
@@ -128,7 +131,7 @@ li {
     color: #ffffff;
     /* font-weight: bolder; */
     webkit-text-fill-color: white;
-    -webkit-text-stroke: 1px white;
+    -webkit-text-stroke: 1px black;
 }
 
 li::marker{
