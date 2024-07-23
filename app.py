@@ -125,7 +125,7 @@ li {
     color: #000000;
     /* font-weight: bolder; */
     webkit-text-fill-color: white;
-    -webkit-text-stroke: 1px #2fbcff;
+    -webkit-text-stroke: 1px black;
 }
 
 li::marker{
