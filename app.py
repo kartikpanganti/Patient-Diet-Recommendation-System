@@ -130,7 +130,7 @@ strong {
 li {
     color: #ffffff;
     /* font-weight: bolder; */
-    webkit-text-fill-color: white;
+    webkit-text-fill-color: black;
     -webkit-text-stroke: 1px black;
 }
 
