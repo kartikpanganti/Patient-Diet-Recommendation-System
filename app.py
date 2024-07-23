@@ -120,6 +120,19 @@ color:#2fbcff
 
 }
 
+
+.st-emotion-cache-h4xjwg {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 3.75rem;
+    background: rgba(0, 0, 0, 0)
+    outline: none;
+    z-index: 999990;
+    display: block;
+}
+
     </style>
     """,
     unsafe_allow_html=True,
