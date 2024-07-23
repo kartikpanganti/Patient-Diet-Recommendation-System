@@ -35,6 +35,9 @@ chain_resto = LLMChain(llm=model, prompt=prompt_template_resto)
 st.markdown(
     """
     <style>
+    .st-emotion-cache-4z1n4l en6cib65{
+    color:black;
+    }
 
 
     .viewerBadge_text__fzr3E{
