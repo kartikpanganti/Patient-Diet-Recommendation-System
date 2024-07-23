@@ -35,6 +35,11 @@ chain_resto = LLMChain(llm=model, prompt=prompt_template_resto)
 st.markdown(
     """
     <style>
+
+
+    #MainMenu{
+    visibility:hidden;
+    }
         .title {
             font-size: 25px;
             font-weight: bold;
