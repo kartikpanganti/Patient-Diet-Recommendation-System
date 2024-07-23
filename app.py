@@ -125,7 +125,7 @@ strong {
 }
 
 li {
-    color: #000000;
+    color: #ffffff;
     /* font-weight: bolder; */
     webkit-text-fill-color: white;
     -webkit-text-stroke: 1px black;
