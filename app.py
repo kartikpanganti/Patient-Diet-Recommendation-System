@@ -115,7 +115,7 @@ background-color: #008CBA;;
 
 
 strong {
-    color: #0fe800;
+    color: #ffffff;
     font-size: 25px;
     text-shadow: #FC0 10px 1px 13px;
     font-weight: bold;
