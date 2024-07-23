@@ -81,7 +81,7 @@ visibility:hidden;
         }
        section.main.st-emotion-cache-bm2z3a.ea3mdgi8 {
     background-size: cover;
-    background-image: url(https://www.freepik.com/free-photo/brown-paper-surrounded-by-healthy-chopped-vegetables-fruits-ingredients-table_3668488.htm#fromView=search&page=1&position=5&uuid=bb4066f4-ebfb-4b1d-8dcd-e855925f8b38">Image by freepik);
+    background-image: url(https://img.freepik.com/free-photo/brown-paper-surrounded-by-healthy-chopped-vegetables-fruits-ingredients-table_23-2148026918.jpg?t=st=1721718469~exp=1721722069~hmac=adab3d4e5e32e8197a30f75f181a593cfc62d9338cf27e086d5992a766e1ffd5&w=900);
 }
 
 p .st-emotion-cache-1sno8jx e1nzilvr4{
