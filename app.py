@@ -136,7 +136,7 @@ color:#2fbcff
     left: 0px;
     right: 0px;
     height: 3.75rem;
-    background-color: rgba(245, 87, 145, 0.8);
+    background-color: rgba(0, 0, 0, 0);
     outline: none;
     z-index: 999990;
     display: block;
