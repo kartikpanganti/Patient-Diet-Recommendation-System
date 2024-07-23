@@ -105,7 +105,7 @@ h1 {
 }
 
 label.st-emotion-cache-1qg05tj.e1y5xkzn3 {
-    color: #ffa1a1;
+    color: #ffffff;
     font-weight: bold;
     text-shadow: 0px 0px 5px red;
 }
@@ -115,7 +115,7 @@ background-color: #008CBA;;
 
 
 strong {
-    color: #ffffff;
+    color: #0fe800;
     font-size: 25px;
     text-shadow: #FC0 10px 1px 13px;
     font-weight: bold;
