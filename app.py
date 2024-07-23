@@ -115,7 +115,7 @@ background-color: #008CBA;;
 
 
 strong {
-    color: #00b3ff;
+    color: #0fe800;
     font-size: 25px;
     text-shadow: #FC0 10px 1px 13px;
     font-weight: bold;
@@ -125,12 +125,12 @@ li {
     color: #000000;
     /* font-weight: bolder; */
     webkit-text-fill-color: white;
-    -webkit-text-stroke: 1px black;
+    -webkit-text-stroke: 1px #2fbcff;
 }
 
 li::marker{
 list-style-type: circle;
-color:black;
+color:#2fbcff;
 
 }
 
