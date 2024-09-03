@@ -204,7 +204,10 @@ if st.button('Get Recommendations'):
 st.markdown(
     """
     <div class="footer">
-        &copy; 2024 Kartik Panganti. All rights reserved.
+        &copy; 2024 CODE_WIZARDS. All rights reserved.
+        @kartik panaganti
+        @Zahid shaikh
+        @vijaykumar Maske
     </div>
     """,
     unsafe_allow_html=True,
