@@ -11,7 +11,7 @@ lcg.set_verbose(True)  # Enable verbose mode if needed
 #  model template
 os.environ["GOOGLE_API_KEY"] = 'AIzaSyAHiVEN9VOUB3-vG54gWkyu82hSo1vddTo'
 generation_config = {"temperature": 0.9, "top_p": 1, "top_k": 1, "max_output_tokens": 2048}
-model = GoogleGenerativeAI(model="gemini-1.0-pro", generation_config=generation_config)
+model = GoogleGenerativeAI(model="gemini-1.5-pro", generation_config=generation_config)
 # promt template
 prompt_template_resto = PromptTemplate(
     input_variables=['age', 'gender', 'weight', 'height', 'veg_or_nonveg', 'disease', 'region', 'state', 'allergics', 'foodtype'],
