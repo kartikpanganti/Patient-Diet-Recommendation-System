@@ -1,15 +1,37 @@
 import os
 import streamlit as st
-from langchain.prompts import PromptTemplate
+try:
+    from langchain.prompts import PromptTemplate
+except Exception:  # pragma: no cover
+    from langchain_core.prompts import PromptTemplate
+
 from langchain_google_genai import GoogleGenerativeAI
 from langchain.chains import LLMChain
-import langchain.globals as lcg
+
+try:
+    import langchain.globals as lcg
+except Exception:  # pragma: no cover
+    lcg = None
 
 # Set verbose to True or False based on your requirements
-lcg.set_verbose(True)  # Enable verbose mode if needed
+if lcg is not None:
+    lcg.set_verbose(True)  # Enable verbose mode if needed
 
-#  model template
-os.environ["GOOGLE_API_KEY"] = 'AIzaSyAHiVEN9VOUB3-vG54gWkyu82hSo1vddTo'
+# Model setup
+google_api_key = os.environ.get("GOOGLE_API_KEY")
+if not google_api_key:
+    try:
+        google_api_key = st.secrets["GOOGLE_API_KEY"]
+    except Exception:
+        google_api_key = None
+
+if not google_api_key:
+    st.error(
+        "Missing GOOGLE_API_KEY. Set it as an environment variable or in Streamlit Secrets."
+    )
+    st.stop()
+
+os.environ["GOOGLE_API_KEY"] = google_api_key
 generation_config = {"temperature": 0.9, "top_p": 1, "top_k": 1, "max_output_tokens": 2048}
 model = GoogleGenerativeAI(model="gemini-1.5-pro", generation_config=generation_config)
 # promt template
