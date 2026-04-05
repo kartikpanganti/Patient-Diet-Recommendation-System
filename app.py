@@ -1,12 +1,16 @@
 import os
 import streamlit as st
 try:
-    from langchain.prompts import PromptTemplate
-except Exception:  # pragma: no cover
     from langchain_core.prompts import PromptTemplate
+except Exception:  # pragma: no cover
+    from langchain.prompts import PromptTemplate
 
 from langchain_google_genai import GoogleGenerativeAI
-from langchain.chains import LLMChain
+
+try:
+    from langchain.chains import LLMChain
+except Exception:  # pragma: no cover
+    LLMChain = None
 
 try:
     import langchain.globals as lcg
@@ -51,7 +55,11 @@ prompt_template_resto = PromptTemplate(
              "Person allergics: {allergics}\n"
              "Person foodtype: {foodtype}."
 )
-chain_resto = LLMChain(llm=model, prompt=prompt_template_resto)
+
+if LLMChain is not None:
+    chain_resto = LLMChain(llm=model, prompt=prompt_template_resto)
+else:
+    chain_resto = prompt_template_resto | model
 
 # here is some my custom styling on streamlit
 st.markdown(
@@ -215,7 +223,10 @@ if st.button('Get Recommendations'):
         results = chain_resto.invoke(input_data)
 
         # Extract recommendations
-        results_text = results['text']
+        if isinstance(results, dict) and "text" in results:
+            results_text = results["text"]
+        else:
+            results_text = str(results)
         st.write("Generated Recommendations:")
 
         st.write(results_text)
