@@ -10,7 +10,11 @@
 
 /* App background */
 .stApp {
-  background-color: var(--pdr-bg);
+  background: linear-gradient(
+    135deg,
+    var(--pdr-bg) 0%,
+    rgba(47, 188, 255, 0.18) 100%
+  );
   color: var(--pdr-text);
 }
 
@@ -45,12 +49,12 @@ a {
 /* Title */
 h1 {
   text-align: center;
-  color: var(--pdr-text);
+  color: var(--pdr-accent);
   font-size: 44px;
   line-height: 1.15;
   margin-top: 0.5rem;
   margin-bottom: 1.25rem;
-  text-shadow: none;
+  text-shadow: 0 0 14px rgba(47, 188, 255, 0.35);
 }
 
 /* Labels */
@@ -177,7 +181,12 @@ font-size: 54px;
 
 section.main.st-emotion-cache-bm2z3a.ea3mdgi8 {
 background-size: cover;
-background-image: url(https://img.freepik.com/free-photo/brown-paper-surrounded-by-healthy-chopped-vegetables-fruits-ingredients-table_23-2148026918.jpg?t=st=1721718469~exp=1721722069~hmac=adab3d4e5e32e8197a30f75f181a593cfc62d9338cf27e086d5992a766e1ffd5&w=900);
+background-image: none;
+background: linear-gradient(
+  135deg,
+  rgba(14, 17, 23, 0.25) 0%,
+  rgba(47, 188, 255, 0.12) 100%
+);
 }
 
 /* Note: kept as-is from original inline CSS (selector likely invalid)
@@ -191,17 +200,7 @@ text-shadow: 5px 3px 4px darkmagenta;
 }
 */
 
-h1 {
-font-family: "Source Sans Pro", sans-serif;
-font-weight: 700;
-color: rgb(9 253 255);
-padding: 1.25rem 0px 1rem;
-margin: 0px;
-line-height: 1.2;
-font-size: 49px;
-text-align: center;
-text-shadow: 6px 6px 6px blue;
-}
+/* Removed duplicate h1 block (title is styled above) */
 
 label.st-emotion-cache-1qg05tj.e1y5xkzn3 {
 color: #ffffff;
