@@ -29,6 +29,18 @@ if not google_api_key:
     except Exception:
         google_api_key = None
 
+gemini_model = os.environ.get("GEMINI_MODEL") or os.environ.get("GOOGLE_MODEL")
+if not gemini_model:
+    try:
+        gemini_model = st.secrets.get("GEMINI_MODEL")  # type: ignore[attr-defined]
+    except Exception:
+        gemini_model = None
+
+if not gemini_model:
+    # Default to a commonly available generateContent-capable model.
+    # Override via env var `GEMINI_MODEL` (or Streamlit Secrets) if your project/account differs.
+    gemini_model = "gemini-2.0"
+
 if not google_api_key:
     st.error(
         "Missing GOOGLE_API_KEY. Set it as an environment variable or in Streamlit Secrets."
@@ -36,8 +48,13 @@ if not google_api_key:
     st.stop()
 
 os.environ["GOOGLE_API_KEY"] = google_api_key
-generation_config = {"temperature": 0.9, "top_p": 1, "top_k": 1, "max_output_tokens": 2048}
-model = GoogleGenerativeAI(model="gemini-1.5-pro", generation_config=generation_config)
+model = GoogleGenerativeAI(
+    model=gemini_model,
+    temperature=0.9,
+    top_p=1,
+    top_k=1,
+    max_output_tokens=2048,
+)
 # promt template
 prompt_template_resto = PromptTemplate(
     input_variables=['age', 'gender', 'weight', 'height', 'veg_or_nonveg', 'disease', 'region', 'state', 'allergics', 'foodtype'],
@@ -220,7 +237,18 @@ if st.button('Get Recommendations'):
             'foodtype': foodtype
         }
 
-        results = chain_resto.invoke(input_data)
+        try:
+            results = chain_resto.invoke(input_data)
+        except Exception as e:
+            msg = str(e)
+            st.error(msg)
+            if "NOT_FOUND" in msg and "models/" in msg:
+                st.info(
+                    "The configured Gemini model name may not be available for your API/project. "
+                    "Set `GEMINI_MODEL` (or Streamlit Secret `GEMINI_MODEL`) to an available model, "
+                    "e.g. `gemini-1.5-pro-latest` or `gemini-1.5-flash-latest`."
+                )
+            st.stop()
 
         # Extract recommendations
         if isinstance(results, dict) and "text" in results:
