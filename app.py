@@ -39,7 +39,7 @@ if not gemini_model:
 if not gemini_model:
     # Default to a commonly available generateContent-capable model.
     # Override via env var `GEMINI_MODEL` (or Streamlit Secrets) if your project/account differs.
-    gemini_model = "gemini-3.1-flash-lite"
+    gemini_model = "gemini-3.1-flash-lite-preview"
 
 if not google_api_key:
     st.error(
