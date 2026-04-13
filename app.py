@@ -1,7 +1,5 @@
 import os
-import base64
 from pathlib import Path
-
 import streamlit as st
 try:
     from langchain_core.prompts import PromptTemplate
@@ -53,10 +51,10 @@ if not google_api_key:
 os.environ["GOOGLE_API_KEY"] = google_api_key
 model = GoogleGenerativeAI(
     model=gemini_model,
-    temperature=0.9,
+    temperature=0.7,
     top_p=1,
     top_k=1,
-    max_output_tokens=2048,
+    max_output_tokens=4096,
 )
 # promt template
 prompt_template_resto = PromptTemplate(
@@ -81,47 +79,18 @@ if LLMChain is not None:
 else:
     chain_resto = prompt_template_resto | model
 
-# Styling tuned for dark backgrounds (readable inputs + clear structure)
-_css_path = Path(__file__).with_name("styles.css")
-if _css_path.exists():
-    st.markdown(f"<style>{_css_path.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
+def load_css(file_name: str = "styles.css") -> None:
+    css_path = Path(__file__).with_name(file_name)
+    try:
+        css = css_path.read_text(encoding="utf-8")
+    except OSError:
+        st.warning(f"CSS file not found: {css_path}")
+        return
 
-# Background image (local file, works on Streamlit Cloud by embedding as base64)
-_bg_candidates = [
-        Path(__file__).with_name("background.jpg"),
-        Path(__file__).with_name("background.jpeg"),
-        Path(__file__).with_name("background.png"),
-        Path(__file__).with_name("BACKGORUND.jpg"),
-        Path(__file__).with_name("BACKGORUND.jpeg"),
-        Path(__file__).with_name("BACKGORUND.png"),
-]
+    st.markdown(f"<style>\n{css}\n</style>", unsafe_allow_html=True)
 
-_bg_path = next((p for p in _bg_candidates if p.exists()), None)
-if _bg_path is not None:
-        ext = _bg_path.suffix.lower().lstrip(".")
-        mime = {
-                "jpg": "image/jpeg",
-                "jpeg": "image/jpeg",
-                "png": "image/png",
-                "webp": "image/webp",
-        }.get(ext, "image/jpeg")
-        b64 = base64.b64encode(_bg_path.read_bytes()).decode("ascii")
-        st.markdown(
-                """
-                <style>
-                    .stApp {
-                        background-image:
-                            linear-gradient(rgba(14, 17, 23, 0.78), rgba(14, 17, 23, 0.78)),
-                            url('data:%s;base64,%s');
-                        background-size: cover;
-                        background-position: center;
-                        background-attachment: fixed;
-                    }
-                </style>
-                """
-                % (mime, b64),
-                unsafe_allow_html=True,
-        )
+
+load_css()
 
 # Create a Streamlit web app
 st.title('PATIENT DIET RECOMMENDATION SYSTEM')
@@ -166,12 +135,6 @@ if st.button('Get Recommendations'):
                     "Set `GEMINI_MODEL` (or Streamlit Secret `GEMINI_MODEL`) to an available model, "
                     "e.g. `gemini-1.5-pro-latest` or `gemini-1.5-flash-latest`."
                 )
-            if "PERMISSION_DENIED" in msg and "reported as leaked" in msg:
-                st.info(
-                    "Google has disabled this API key because it was flagged as leaked. "
-                    "Create a new key in Google AI Studio / Google Cloud, update Streamlit Secrets, "
-                    "and remove any committed secrets from your repo history."
-                )
             st.stop()
 
         # Extract recommendations
@@ -190,9 +153,9 @@ st.markdown(
     """
     <div class="footer">
         &copy; 2024 CODE_WIZARDS. All rights reserved.
-        @Kartik Panganti
+        @kartik panaganti
         @Zahid shaikh
-        @Vijaykumar Maske
+        @vijaykumar Maske
     </div>
     """,
     unsafe_allow_html=True,
