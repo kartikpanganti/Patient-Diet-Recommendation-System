@@ -1,4 +1,6 @@
 import os
+from pathlib import Path
+
 import streamlit as st
 try:
     from langchain_core.prompts import PromptTemplate
@@ -78,132 +80,10 @@ if LLMChain is not None:
 else:
     chain_resto = prompt_template_resto | model
 
-# here is some my custom styling on streamlit
-st.markdown(
-    """
-    <style>
-    .st-emotion-cache-4z1n4l en6cib65{
-    color:black;
-    }
-
-
-    .viewerBadge_text__fzr3E{
-    visibility:hidden;
-    }
-.viewerBadge_link__qRIco {
-    --tw-bg-opacity: 1;
-    background-color: rgb(255 75 75 / var(--tw-bg-opacity));
-    border-top-left-radius: .5rem;
-    padding: 1rem 1.25rem;
-    visibility: hidden;}
-
-    a{
-visibility:hidden;
-    }
-
-    #MainMenu{
-    visibility:hidden;
-    }
-
-    .stActionButton{
-    visibility:hidden;
-    }
-
-    .st-emotion-cache-h4xjwg ezrtsby2{
-    visibility:hidden;
-    }
-        .title {
-            font-size: 25px;
-            font-weight: bold;
-            font-family: 'Arial', sans-serif;
-        }
-        .content {
-            font-family: 'Helvetica', sans-serif;
-        #petient
-        }
-        span.st-emotion-cache-10trblm.e1nzilvr1{
-            margin-top: 50px;
-            color: darkmagenta;
-                text-shadow: #FC0 1px 0 10px;
-
-    text-align: center;
-    font-size: 54px;
-        }
-       section.main.st-emotion-cache-bm2z3a.ea3mdgi8 {
-    background-size: cover;
-    background-image: url(https://img.freepik.com/free-photo/brown-paper-surrounded-by-healthy-chopped-vegetables-fruits-ingredients-table_23-2148026918.jpg?t=st=1721718469~exp=1721722069~hmac=adab3d4e5e32e8197a30f75f181a593cfc62d9338cf27e086d5992a766e1ffd5&w=900);
-}
-
-p .st-emotion-cache-1sno8jx e1nzilvr4{
-{
-    font-size: 50px;
-    font-family: auto;
-    color: #96f700;
-    text-shadow: 5px 3px 4px darkmagenta;
-}
-}
-h1 {
-    font-family: "Source Sans Pro", sans-serif;
-    font-weight: 700;
-    color: rgb(9 253 255);
-    padding: 1.25rem 0px 1rem;
-    margin: 0px;
-    line-height: 1.2;
-    font-size: 49px;
-    text-align: center;
-    text-shadow: 6px 6px 6px blue;
-}
-
-label.st-emotion-cache-1qg05tj.e1y5xkzn3 {
-    color: #ffffff;
-    font-weight: bold;
-    text-shadow: 0px 0px 5px red;
-}
-button.st-emotion-cache-19rxjzo.ef3psqc12{
-background-color: #008CBA;;
-}
-#bui638val-0{
--webkit-text-stroke: 1px white;
-
-}
-
-strong {
-    color: #002aff;
-    font-size: 25px;
-    text-shadow: #FC0 10px 1px 13px;
-    font-weight: bold;
-}
-
-li {
-    color: #ffffff;
-    /* font-weight: bolder; */
-    webkit-text-fill-color: black;
-    -webkit-text-stroke: 1px black;
-}
-
-li::marker{
-list-style-type: circle;
-color:#2fbcff;
-
-}
-
-
-.st-emotion-cache-h4xjwg {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    height: 3.75rem;
-    background-color: rgba(0, 0, 0, 0);
-    outline: none;
-    z-index: 999990;
-    display: block;
-}
-
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+# Styling tuned for dark backgrounds (readable inputs + clear structure)
+_css_path = Path(__file__).with_name("styles.css")
+if _css_path.exists():
+    st.markdown(f"<style>{_css_path.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
 
 # Create a Streamlit web app
 st.title('PATIENT DIET RECOMMENDATION SYSTEM')
@@ -247,6 +127,12 @@ if st.button('Get Recommendations'):
                     "The configured Gemini model name may not be available for your API/project. "
                     "Set `GEMINI_MODEL` (or Streamlit Secret `GEMINI_MODEL`) to an available model, "
                     "e.g. `gemini-1.5-pro-latest` or `gemini-1.5-flash-latest`."
+                )
+            if "PERMISSION_DENIED" in msg and "reported as leaked" in msg:
+                st.info(
+                    "Google has disabled this API key because it was flagged as leaked. "
+                    "Create a new key in Google AI Studio / Google Cloud, update Streamlit Secrets, "
+                    "and remove any committed secrets from your repo history."
                 )
             st.stop()
 

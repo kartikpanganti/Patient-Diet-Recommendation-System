@@ -1,0 +1,113 @@
+:root {
+  --pdr-bg: #0e1117;
+  --pdr-surface: rgba(255, 255, 255, 0.06);
+  --pdr-surface-2: rgba(255, 255, 255, 0.09);
+  --pdr-border: rgba(255, 255, 255, 0.14);
+  --pdr-text: rgba(255, 255, 255, 0.92);
+  --pdr-muted: rgba(255, 255, 255, 0.72);
+  --pdr-accent: #2fbcff;
+}
+
+/* App background */
+.stApp {
+  background: var(--pdr-bg);
+  color: var(--pdr-text);
+}
+
+/* Hide Streamlit chrome */
+#MainMenu,
+footer,
+header {
+  visibility: hidden;
+}
+
+a {
+  visibility: hidden;
+}
+
+.viewerBadge_text__fzr3E,
+.viewerBadge_link__qRIco {
+  visibility: hidden;
+}
+
+.stActionButton {
+  visibility: hidden;
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  color: var(--pdr-text);
+  font-size: 44px;
+  line-height: 1.15;
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
+  text-shadow: none;
+}
+
+/* Labels */
+label,
+.stMarkdown,
+.stMarkdown p {
+  color: var(--pdr-text) !important;
+}
+
+.stMarkdown small,
+.stCaption {
+  color: var(--pdr-muted) !important;
+}
+
+/* Inputs (text) */
+.stTextInput input {
+  background: var(--pdr-surface) !important;
+  border: 1px solid var(--pdr-border) !important;
+  color: var(--pdr-text) !important;
+  border-radius: 10px !important;
+}
+
+.stTextInput input:focus {
+  border-color: var(--pdr-accent) !important;
+  box-shadow: 0 0 0 1px var(--pdr-accent) !important;
+}
+
+/* Selectbox */
+.stSelectbox [data-baseweb="select"] > div {
+  background: var(--pdr-surface) !important;
+  border: 1px solid var(--pdr-border) !important;
+  border-radius: 10px !important;
+}
+
+.stSelectbox [data-baseweb="select"] * {
+  color: var(--pdr-text) !important;
+}
+
+/* Button */
+.stButton > button {
+  background: var(--pdr-accent) !important;
+  color: #001018 !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 0.6rem 1rem !important;
+  font-weight: 700 !important;
+}
+
+.stButton > button:hover {
+  filter: brightness(1.05);
+}
+
+/* Output area readability */
+.stAlert,
+.stSuccess,
+.stWarning,
+.stError {
+  border-radius: 12px;
+}
+
+.stMarkdown ul,
+.stMarkdown ol {
+  padding-left: 1.25rem;
+}
+
+.stMarkdown li {
+  color: var(--pdr-text) !important;
+}
