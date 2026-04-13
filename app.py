@@ -153,9 +153,9 @@ st.markdown(
     """
     <div class="footer">
         &copy; 2024 CODE_WIZARDS. All rights reserved.
-        @kartik panaganti
+        @Kartik Panganti
         @Zahid shaikh
-        @vijaykumar Maske
+        @Vijaykumar Maske
     </div>
     """,
     unsafe_allow_html=True,
