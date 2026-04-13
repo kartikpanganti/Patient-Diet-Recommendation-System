@@ -10,8 +10,16 @@
 
 /* App background */
 .stApp {
-  background: var(--pdr-bg);
+  background-color: var(--pdr-bg);
   color: var(--pdr-text);
+}
+
+/* Main content surface to keep structure readable over photo */
+.block-container {
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  padding: 1.25rem 1.25rem 1.5rem;
 }
 
 /* Hide Streamlit chrome */

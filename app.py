@@ -1,4 +1,5 @@
 import os
+import base64
 from pathlib import Path
 
 import streamlit as st
@@ -85,6 +86,43 @@ _css_path = Path(__file__).with_name("styles.css")
 if _css_path.exists():
     st.markdown(f"<style>{_css_path.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
 
+# Background image (local file, works on Streamlit Cloud by embedding as base64)
+_bg_candidates = [
+        Path(__file__).with_name("background.jpg"),
+        Path(__file__).with_name("background.jpeg"),
+        Path(__file__).with_name("background.png"),
+        Path(__file__).with_name("BACKGORUND.jpg"),
+        Path(__file__).with_name("BACKGORUND.jpeg"),
+        Path(__file__).with_name("BACKGORUND.png"),
+]
+
+_bg_path = next((p for p in _bg_candidates if p.exists()), None)
+if _bg_path is not None:
+        ext = _bg_path.suffix.lower().lstrip(".")
+        mime = {
+                "jpg": "image/jpeg",
+                "jpeg": "image/jpeg",
+                "png": "image/png",
+                "webp": "image/webp",
+        }.get(ext, "image/jpeg")
+        b64 = base64.b64encode(_bg_path.read_bytes()).decode("ascii")
+        st.markdown(
+                """
+                <style>
+                    .stApp {
+                        background-image:
+                            linear-gradient(rgba(14, 17, 23, 0.78), rgba(14, 17, 23, 0.78)),
+                            url('data:%s;base64,%s');
+                        background-size: cover;
+                        background-position: center;
+                        background-attachment: fixed;
+                    }
+                </style>
+                """
+                % (mime, b64),
+                unsafe_allow_html=True,
+        )
+
 # Create a Streamlit web app
 st.title('PATIENT DIET RECOMMENDATION SYSTEM')
 
@@ -152,9 +190,9 @@ st.markdown(
     """
     <div class="footer">
         &copy; 2024 CODE_WIZARDS. All rights reserved.
-        @kartik panaganti
+        @Kartik Panganti
         @Zahid shaikh
-        @vijaykumar Maske
+        @Vijaykumar Maske
     </div>
     """,
     unsafe_allow_html=True,
