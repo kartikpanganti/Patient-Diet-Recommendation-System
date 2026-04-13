@@ -6,9 +6,15 @@
   --pdr-text: rgba(255, 255, 255, 0.92);
   --pdr-muted: rgba(255, 255, 255, 0.72);
   --pdr-accent: #2fbcff;
+
+  --pdr-danger: rgba(255, 75, 75, 0.95);
+  --pdr-success: rgba(77, 213, 154, 0.95);
 }
 
-/* App background */
+/* ----------------------------
+   Global layout & typography
+   ---------------------------- */
+
 .stApp {
   background: linear-gradient(
     135deg,
@@ -18,7 +24,7 @@
   color: var(--pdr-text);
 }
 
-/* Main content surface to keep structure readable over photo */
+/* Keep structure readable over background */
 .block-container {
   background: rgba(0, 0, 0, 0.28);
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -26,27 +32,6 @@
   padding: 1.25rem 1.25rem 1.5rem;
 }
 
-/* Hide Streamlit chrome */
-#MainMenu,
-footer,
-header {
-  visibility: hidden;
-}
-
-a {
-  visibility: hidden;
-}
-
-.viewerBadge_text__fzr3E,
-.viewerBadge_link__qRIco {
-  visibility: hidden;
-}
-
-.stActionButton {
-  visibility: hidden;
-}
-
-/* Title */
 h1 {
   text-align: center;
   color: var(--pdr-accent);
@@ -57,10 +42,23 @@ h1 {
   text-shadow: 0 0 14px rgba(47, 188, 255, 0.35);
 }
 
-/* Labels */
+h2,
+h3,
+h4 {
+  color: var(--pdr-text);
+}
+
+a,
+a:visited {
+  color: var(--pdr-accent);
+}
+
+/* Text */
 label,
 .stMarkdown,
-.stMarkdown p {
+.stMarkdown p,
+.stText,
+.stCaption {
   color: var(--pdr-text) !important;
 }
 
@@ -69,52 +67,7 @@ label,
   color: var(--pdr-muted) !important;
 }
 
-/* Inputs (text) */
-.stTextInput input {
-  background: var(--pdr-surface) !important;
-  border: 1px solid var(--pdr-border) !important;
-  color: var(--pdr-text) !important;
-  border-radius: 10px !important;
-}
-
-.stTextInput input:focus {
-  border-color: var(--pdr-accent) !important;
-  box-shadow: 0 0 0 1px var(--pdr-accent) !important;
-}
-
-/* Selectbox */
-.stSelectbox [data-baseweb="select"] > div {
-  background: var(--pdr-surface) !important;
-  border: 1px solid var(--pdr-border) !important;
-  border-radius: 10px !important;
-}
-
-.stSelectbox [data-baseweb="select"] * {
-  color: var(--pdr-text) !important;
-}
-
-/* Button */
-.stButton > button {
-  background: var(--pdr-accent) !important;
-  color: #001018 !important;
-  border: 1px solid rgba(0, 0, 0, 0.2) !important;
-  border-radius: 12px !important;
-  padding: 0.6rem 1rem !important;
-  font-weight: 700 !important;
-}
-
-.stButton > button:hover {
-  filter: brightness(1.05);
-}
-
-/* Output area readability */
-.stAlert,
-.stSuccess,
-.stWarning,
-.stError {
-  border-radius: 12px;
-}
-
+/* Lists */
 .stMarkdown ul,
 .stMarkdown ol {
   padding-left: 1.25rem;
@@ -124,125 +77,191 @@ label,
   color: var(--pdr-text) !important;
 }
 
-/* ----------------------------
-   Moved from app.py (inline styles)
-   ---------------------------- */
-
-.st-emotion-cache-4z1n4l en6cib65{
-color:black;
-}
-
-.viewerBadge_text__fzr3E{
-visibility:hidden;
-}
-
-.viewerBadge_link__qRIco {
---tw-bg-opacity: 1;
-background-color: rgb(255 75 75 / var(--tw-bg-opacity));
-border-top-left-radius: .5rem;
-padding: 1rem 1.25rem;
-visibility: hidden;
-}
-
-a{
-visibility:hidden;
-}
-
-#MainMenu{
-visibility:hidden;
-}
-
-.stActionButton{
-visibility:hidden;
-}
-
-.st-emotion-cache-h4xjwg ezrtsby2{
-visibility:hidden;
-}
-
-.title {
-font-size: 25px;
-font-weight: bold;
-font-family: 'Arial', sans-serif;
-}
-
-.content {
-font-family: 'Helvetica', sans-serif;
-/* #petient */
-}
-
-span.st-emotion-cache-10trblm.e1nzilvr1{
-margin-top: 50px;
-color: darkmagenta;
-text-shadow: #FC0 1px 0 10px;
-text-align: center;
-font-size: 54px;
-}
-
-section.main.st-emotion-cache-bm2z3a.ea3mdgi8 {
-background-size: cover;
-background-image: none;
-background: linear-gradient(
-  135deg,
-  rgba(14, 17, 23, 0.25) 0%,
-  rgba(47, 188, 255, 0.12) 100%
-);
-}
-
-/* Note: kept as-is from original inline CSS (selector likely invalid)
-p .st-emotion-cache-1sno8jx e1nzilvr4{
-{
-font-size: 50px;
-font-family: auto;
-color: #96f700;
-text-shadow: 5px 3px 4px darkmagenta;
-}
-}
-*/
-
-/* Removed duplicate h1 block (title is styled above) */
-
-label.st-emotion-cache-1qg05tj.e1y5xkzn3 {
-color: #ffffff;
-font-weight: bold;
-text-shadow: 0px 0px 5px red;
-}
-
-button.st-emotion-cache-19rxjzo.ef3psqc12{
-background-color: #008CBA;
-}
-
-#bui638val-0{
--webkit-text-stroke: 1px white;
+.stMarkdown li::marker {
+  color: var(--pdr-accent);
 }
 
 strong {
-color: #002aff;
-font-size: 25px;
-text-shadow: #FC0 10px 1px 13px;
-font-weight: bold;
+  color: var(--pdr-text);
 }
 
-li {
-color: #ffffff;
-/* font-weight: bolder; */
-webkit-text-fill-color: black;
--webkit-text-stroke: 1px black;
+/* Code blocks */
+code,
+pre {
+  color: var(--pdr-text);
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
 }
 
-li::marker{
-list-style-type: circle;
-color:#2fbcff;
+/* ----------------------------
+   Sidebar
+   ---------------------------- */
+
+[data-testid="stSidebar"] {
+  background: rgba(0, 0, 0, 0.22);
+  border-right: 1px solid rgba(255, 255, 255, 0.10);
 }
 
-.st-emotion-cache-h4xjwg {
-position: fixed;
-top: 0px;
-left: 0px;
-right: 0px;
-height: 3.75rem;
-background-color: rgba(0, 0, 0, 0);
-outline: none;
-z-index: 999990;
-display: block;
+[data-testid="stSidebar"] * {
+  color: var(--pdr-text);
+}
+
+/* ----------------------------
+   Inputs & selectors
+   ---------------------------- */
+
+/* Text-like inputs */
+.stTextInput input,
+.stTextArea textarea,
+.stNumberInput input,
+.stDateInput input,
+.stTimeInput input,
+.stEmailInput input,
+.stPasswordInput input {
+  background: var(--pdr-surface) !important;
+  border: 1px solid var(--pdr-border) !important;
+  color: var(--pdr-text) !important;
+  border-radius: 10px !important;
+}
+
+.stTextInput input:focus,
+.stTextArea textarea:focus,
+.stNumberInput input:focus,
+.stDateInput input:focus,
+.stTimeInput input:focus,
+.stEmailInput input:focus,
+.stPasswordInput input:focus {
+  border-color: var(--pdr-accent) !important;
+  box-shadow: 0 0 0 1px rgba(47, 188, 255, 0.9) !important;
+  outline: none !important;
+}
+
+/* Selectbox / multiselect (BaseWeb) */
+.stSelectbox [data-baseweb="select"] > div,
+.stMultiSelect [data-baseweb="select"] > div {
+  background: var(--pdr-surface) !important;
+  border: 1px solid var(--pdr-border) !important;
+  border-radius: 10px !important;
+}
+
+.stSelectbox [data-baseweb="select"] *,
+.stMultiSelect [data-baseweb="select"] * {
+  color: var(--pdr-text) !important;
+}
+
+/* Dropdown menu */
+[data-baseweb="popover"] * {
+  color: var(--pdr-text) !important;
+}
+
+[data-baseweb="menu"] {
+  background: rgba(16, 20, 28, 0.98) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 12px !important;
+}
+
+/* Slider (BaseWeb) */
+[data-baseweb="slider"] {
+  padding-top: 0.25rem;
+}
+
+[data-baseweb="slider"] div[role="slider"] {
+  background: var(--pdr-accent) !important;
+  border: none !important;
+}
+
+[data-baseweb="slider"] div[data-testid="stTickBar"] {
+  color: var(--pdr-muted) !important;
+}
+
+/* Checkbox & radio (BaseWeb) */
+[data-baseweb="checkbox"] *,
+[data-baseweb="radio"] * {
+  color: var(--pdr-text) !important;
+}
+
+/* File uploader */
+[data-testid="stFileUploader"] section {
+  background: var(--pdr-surface) !important;
+  border: 1px dashed var(--pdr-border) !important;
+  border-radius: 12px !important;
+}
+
+/* ----------------------------
+   Buttons
+   ---------------------------- */
+
+.stButton > button,
+.stDownloadButton > button,
+.stFormSubmitButton > button {
+  background: var(--pdr-accent) !important;
+  color: #001018 !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 0.6rem 1rem !important;
+  font-weight: 700 !important;
+}
+
+.stButton > button:hover,
+.stDownloadButton > button:hover,
+.stFormSubmitButton > button:hover {
+  filter: brightness(1.05);
+}
+
+.stButton > button:focus,
+.stDownloadButton > button:focus,
+.stFormSubmitButton > button:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(47, 188, 255, 0.45) !important;
+}
+
+/* ----------------------------
+   Containers & outputs
+   ---------------------------- */
+
+/* Alerts */
+.stAlert,
+.stSuccess,
+.stWarning,
+.stError {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* Expanders */
+[data-testid="stExpander"] {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* Tabs */
+[data-testid="stTabs"] [data-baseweb="tab"] {
+  color: var(--pdr-muted) !important;
+}
+
+[data-testid="stTabs"] [aria-selected="true"] {
+  color: var(--pdr-text) !important;
+}
+
+/* Dataframes / tables */
+[data-testid="stDataFrame"],
+.stDataFrame {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Metrics */
+[data-testid="stMetric"] {
+  background: rgba(0, 0, 0, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+[data-testid="stMetric"] * {
+  color: var(--pdr-text) !important;
 }
