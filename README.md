@@ -1,5 +1,8 @@
 # Patient Diet Recommendation System (Streamlit + Gemini)
 
+Visite Site:
+https://patient-diet-recommendation-system.streamlit.app
+
 A Streamlit web app that collects basic patient details (age, gender, height/weight, diet preference, disease, location, allergies, food type) and generates:
 
 - Restaurant recommendations
