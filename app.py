@@ -308,17 +308,14 @@ if st.button('Get Recommendations'):
             violations.append("Avoid-ingredient(s) appeared in output")
 
         if violations:
-            st.warning(
-                "Some recommendations didn’t match your constraints. "
-                "Regenerating a corrected result…"
-            )
             repair_input = dict(input_data)
             repair_input["original_text"] = results_text
 
-            try:
-                repaired = chain_repair.invoke(repair_input)
-            except Exception:
-                repaired = None
+            with st.spinner("Generating recommendations..."):
+                try:
+                    repaired = chain_repair.invoke(repair_input)
+                except Exception:
+                    repaired = None
 
             if repaired is not None:
                 if isinstance(repaired, dict) and "text" in repaired:
