@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import streamlit as st
+import re
 try:
     from langchain_core.prompts import PromptTemplate
 except Exception:  # pragma: no cover
@@ -74,6 +75,12 @@ prompt_template_resto = PromptTemplate(
         'max_cook_time_minutes',
     ],
     template="Diet Recommendation System:\n"
+             "You must follow the HARD CONSTRAINTS below. If you cannot satisfy a constraint, do not suggest that item.\n\n"
+             "HARD CONSTRAINTS:\n"
+             "- Veg vs Non-Veg is STRICT. If Veg, do NOT include any meat, fish/seafood, or eggs.\n"
+             "- Do NOT include allergens listed in 'Person allergics'.\n"
+             "- Do NOT include ingredients listed in 'Ingredients to avoid'.\n"
+             "- Respect disease constraints when choosing foods (e.g., diabetes, BP, etc.).\n\n"
              "I want you to recommend 6 restaurants names, 6 breakfast names, 5 dinner names, and 6 workout names, "
              "based on the following criteria:\n"
              "Person age: {age}\n"
@@ -100,6 +107,97 @@ if LLMChain is not None:
     chain_resto = LLMChain(llm=model, prompt=prompt_template_resto)
 else:
     chain_resto = prompt_template_resto | model
+
+
+prompt_template_repair = PromptTemplate(
+    input_variables=[
+        'age',
+        'gender',
+        'weight',
+        'height',
+        'veg_or_nonveg',
+        'disease',
+        'region',
+        'state',
+        'allergics',
+        'foodtype',
+        'ingredients_have',
+        'ingredients_avoid',
+        'max_cook_time_minutes',
+        'original_text',
+    ],
+    template=(
+        "You are fixing a diet/recipe recommendation output that violated constraints.\n"
+        "Rewrite it so it strictly satisfies the HARD CONSTRAINTS and keep the same sections: restaurants, breakfast, dinner, workouts, and 3 recipes.\n\n"
+        "HARD CONSTRAINTS:\n"
+        "- Veg vs Non-Veg is STRICT. If Veg, do NOT include any meat, fish/seafood, or eggs.\n"
+        "- Do NOT include allergens listed in 'Person allergics'.\n"
+        "- Do NOT include ingredients listed in 'Ingredients to avoid'.\n"
+        "- Respect disease constraints.\n"
+        "- If max cooking time is provided, keep each recipe within that time.\n\n"
+        "Person age: {age}\n"
+        "Person gender: {gender}\n"
+        "Person weight: {weight}\n"
+        "Person height: {height}\n"
+        "Person veg_or_nonveg: {veg_or_nonveg}\n"
+        "Person generic disease: {disease}\n"
+        "Person region: {region}\n"
+        "Person state or City: {state}\n"
+        "Person allergics: {allergics}\n"
+        "Person foodtype: {foodtype}\n"
+        "Ingredients available: {ingredients_have}\n"
+        "Ingredients to avoid: {ingredients_avoid}\n"
+        "Max cooking time (minutes): {max_cook_time_minutes}\n\n"
+        "Original (bad) output:\n{original_text}\n\n"
+        "Now provide the corrected output ONLY (no preamble)."
+    ),
+)
+
+if LLMChain is not None:
+    chain_repair = LLMChain(llm=model, prompt=prompt_template_repair)
+else:
+    chain_repair = prompt_template_repair | model
+
+
+NON_VEG_TERMS = {
+    "chicken",
+    "mutton",
+    "beef",
+    "pork",
+    "fish",
+    "salmon",
+    "tuna",
+    "prawn",
+    "shrimp",
+    "crab",
+    "lobster",
+    "seafood",
+    "egg",
+    "eggs",
+    "turkey",
+    "lamb",
+    "bacon",
+    "ham",
+    "sausage",
+    "pepperoni",
+    "gelatin",
+}
+
+
+def _split_csv_terms(text: str) -> list[str]:
+    raw = (text or "").strip()
+    if not raw or raw.lower() == "not provided":
+        return []
+    # Split on commas/newlines, normalize whitespace
+    parts = re.split(r"[\n,]+", raw)
+    return [p.strip().lower() for p in parts if p.strip()]
+
+
+def _contains_any_term(haystack_lower: str, terms: list[str] | set[str]) -> bool:
+    for term in terms:
+        if term and term in haystack_lower:
+            return True
+    return False
 
 def load_css(file_name: str = "styles.css") -> None:
     css_path = Path(__file__).with_name(file_name)
@@ -192,6 +290,41 @@ if st.button('Get Recommendations'):
             results_text = results["text"]
         else:
             results_text = str(results)
+
+        # Validate hard constraints and auto-repair if needed
+        results_text_lower = results_text.lower()
+        violations: list[str] = []
+
+        if veg_or_nonveg.strip().lower() == "veg":
+            if _contains_any_term(results_text_lower, NON_VEG_TERMS):
+                violations.append("Non-veg items found while Veg was selected")
+
+        allergics_terms = _split_csv_terms(allergics)
+        if allergics_terms and _contains_any_term(results_text_lower, allergics_terms):
+            violations.append("Allergen(s) appeared in output")
+
+        avoid_terms = _split_csv_terms(ingredients_avoid_value)
+        if avoid_terms and _contains_any_term(results_text_lower, avoid_terms):
+            violations.append("Avoid-ingredient(s) appeared in output")
+
+        if violations:
+            st.warning(
+                "Some recommendations didn’t match your constraints. "
+                "Regenerating a corrected result…"
+            )
+            repair_input = dict(input_data)
+            repair_input["original_text"] = results_text
+
+            try:
+                repaired = chain_repair.invoke(repair_input)
+            except Exception:
+                repaired = None
+
+            if repaired is not None:
+                if isinstance(repaired, dict) and "text" in repaired:
+                    results_text = repaired["text"]
+                else:
+                    results_text = str(repaired)
         st.write("Generated Recommendations:")
 
         st.write(results_text)
