@@ -58,7 +58,21 @@ model = GoogleGenerativeAI(
 )
 # promt template
 prompt_template_resto = PromptTemplate(
-    input_variables=['age', 'gender', 'weight', 'height', 'veg_or_nonveg', 'disease', 'region', 'state', 'allergics', 'foodtype'],
+    input_variables=[
+        'age',
+        'gender',
+        'weight',
+        'height',
+        'veg_or_nonveg',
+        'disease',
+        'region',
+        'state',
+        'allergics',
+        'foodtype',
+        'ingredients_have',
+        'ingredients_avoid',
+        'max_cook_time_minutes',
+    ],
     template="Diet Recommendation System:\n"
              "I want you to recommend 6 restaurants names, 6 breakfast names, 5 dinner names, and 6 workout names, "
              "based on the following criteria:\n"
@@ -71,7 +85,15 @@ prompt_template_resto = PromptTemplate(
              "Person region: {region}\n"
              "Person state or City: {state}\n"  
              "Person allergics: {allergics}\n"
-             "Person foodtype: {foodtype}."
+             "Person foodtype: {foodtype}.\n\n"
+             "Optional recipe recommendation inputs (may be empty):\n"
+             "Ingredients available: {ingredients_have}\n"
+             "Ingredients to avoid: {ingredients_avoid}\n"
+             "Max cooking time (minutes): {max_cook_time_minutes}\n\n"
+             "Also recommend 3 simple recipes that match the person’s diet preferences and disease constraints. "
+             "If ingredients are provided, prefer using available ingredients; if exclusions are provided, do not use them. "
+             "If max cooking time is provided, keep each recipe within that time. "
+             "For each recipe, include: name, estimated time, key ingredients, and short steps."
 )
 
 if LLMChain is not None:
@@ -107,10 +129,35 @@ state = st.text_input('State / City')
 allergics = st.text_input('Allergics')
 foodtype = st.text_input('Food Type')
 
+st.markdown("---")
+st.subheader("Recipe recommendation (optional)")
+ingredients_have = st.text_area(
+    'Which ingredients do you have? (optional, comma-separated)',
+    placeholder='e.g., oats, milk, banana, eggs, tomato',
+)
+ingredients_avoid = st.text_area(
+    "Which ingredients do you NOT want in the recipe? (optional, comma-separated)",
+    placeholder='e.g., peanuts, gluten, sugar',
+)
+max_cook_time_minutes = st.number_input(
+    'Time to make (minutes) (optional)',
+    min_value=0,
+    step=5,
+    value=0,
+)
+
 # Button to trigger recommendations
 if st.button('Get Recommendations'):
     # Check if all form fields are filled
     if age and gender and weight and height and veg_or_nonveg and disease and region and state and allergics and foodtype:
+        ingredients_have_value = (ingredients_have or "").strip() or "Not provided"
+        ingredients_avoid_value = (ingredients_avoid or "").strip() or "Not provided"
+        max_cook_time_value = (
+            str(int(max_cook_time_minutes))
+            if isinstance(max_cook_time_minutes, (int, float)) and max_cook_time_minutes > 0
+            else "Not provided"
+        )
+
         input_data = {
             'age': age,
             'gender': gender,
@@ -121,7 +168,10 @@ if st.button('Get Recommendations'):
             'region': region,
             'state': state,  # Include state in input_data
             'allergics': allergics,
-            'foodtype': foodtype
+            'foodtype': foodtype,
+            'ingredients_have': ingredients_have_value,
+            'ingredients_avoid': ingredients_avoid_value,
+            'max_cook_time_minutes': max_cook_time_value,
         }
 
         try:

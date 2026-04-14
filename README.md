@@ -18,6 +18,7 @@ Generation is powered by Google Gemini via LangChain.
 - **Prompt-driven recommendations** using a structured prompt template
 - **Gemini model call** via `langchain-google-genai`
 - **Works on both old/new LangChain versions** (falls back if `LLMChain` is unavailable)
+- **Optional recipe recommendations** using (optional) ingredients + time inputs
 
 ## End-to-end workflow
 
@@ -29,6 +30,7 @@ Generation is powered by Google Gemini via LangChain.
 	- region and state/city
 	- allergies
 	- food type
+	- (optional) recipe inputs: ingredients available, ingredients to avoid, and max cooking time
 3. User clicks **Get Recommendations**.
 4. The app:
 	- builds an `input_data` dictionary from the form
